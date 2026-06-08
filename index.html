@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO 策略：允许收录页面，禁止追踪链接 -->
+    <meta name="robots" content="index, nofollow">
+    <meta name="description" content="埃琳娜的故事 v1.6 中文版下载，2D等角视角SLG观赏型游戏。精美立绘差分+全动态过场CG，新增酒馆打工场景，PC/安卓双端汉化整合版。">
+    
+    <title>埃琳娜的故事 v1.6 - 2D叙事SLG | 官方中文版下载</title>
+
+    <style>
+        /* --- 2D电影变量 --- */
+        :root {
+            --bg-dark: #121212;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --accent-amber: #d97706; /* 暖琥珀 */
+            --accent-light: #fbbf24;
+            --radius-xl: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* 2D柔光背景 */
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(217, 119, 6, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.03) 0%, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        /* --- 头部 --- */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .film-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-radius: 2px;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #fff 40%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- 核心叙事区 --- */
+        .story-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            align-items: start;
+        }
+
+        @media (max-width: 800px) {
+            .story-section { grid-template-columns: 1fr; gap: 40px; }
+            h1 { font-size: 2.8rem; }
+        }
+
+        .story-col p {
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: #d1d5db;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 3px solid var(--accent-amber);
+            padding: 20px 25px;
+            border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+            margin: 30px 0;
+            font-style: italic;
+            color: #e5e7eb;
+        }
+
+        .tech-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+
+        .spec-dot {
+            width: 8px; height: 8px;
+            background: var(--accent-amber);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-amber);
+        }
+
+        /* --- 预览图 --- */
+        .gallery-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .g-frame {
+            aspect-ratio: 16/9;
+            background: #1f1f1f;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--card-border);
+            transition: all 0.4s ease;
+        }
+
+        .g-frame:hover { border-color: var(--accent-amber); transform: scale(1.02); z-index: 2; }
+        .g-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; transition: opacity 0.3s; }
+        .g-frame:hover img { opacity: 1; }
+
+        .g-msg {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.65rem; color: #4b5563; letter-spacing: 2px; pointer-events: none;
+        }
+        .g-frame img[src=""] + .g-msg,
+        .g-frame img:not([src]) + .g-msg { display: flex; }
+        .g-frame img[src]:not([src=""]) + .g-msg { display: none; }
+
+        /* --- 更新时间轴 --- */
+        .timeline-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-amber);
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .log-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .log-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl);
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .log-card:hover { border-color: rgba(255,255,255,0.1); }
+
+        .log-tag {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            background: rgba(217, 119, 6, 0.15);
+            color: var(--accent-light);
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .log-desc { font-size: 0.9rem; color: #9ca3af; line-height: 1.5; }
+
+        /* --- 下载区 --- */
+        .dl-zone {
+            margin-top: 80px;
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dl-zone::before {
+            content: "";
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 200px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-amber), transparent);
+        }
+
+        .btn-dl {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-amber);
+            color: #000;
+            padding: 18px 60px;
+            font-size: 1rem;
+            font-weight: 800;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(217, 119, 6, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-dl:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(217, 119, 6, 0.5); }
+        .btn-dl:active { transform: translateY(0); }
+
+        .dl-meta {
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #6b7280;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div class="film-badge">2D Narrative SLG // v1.6</div>
+        <h1>埃琳娜的故事</h1>
+        <p class="subtitle">一场关于生存、尊严与微光的等角视角叙事。<br>精美2D立绘 × 全动态过场CG，沉浸式观赏体验。</p>
+    </header>
+
+    <div class="story-section">
+        <div class="story-col">
+            <p>当同伴在洞穴深处不幸陨落，当自由的代价是沦为奴隶市场的商品——<strong>埃琳娜的冒险，从这一刻才真正开始。</strong></p>
+            <p>这并非一款需要复杂操作的RPG，而是一部<strong>精心编排的2D互动电影</strong>。我们采用经典的<strong>等角视角（Isometric）</strong>，配合细腻的立绘差分与流畅的过场动画，将镜头语言发挥到极致。你只需轻点屏幕，便能见证导演级的场景切换与角色微表情演绎。</p>
+            
+            <div class="highlight-box">
+                “在这个以猎捕人类为生的种族眼中，她只是货物。<br>但在埃戈纳尔的酒馆里，她正试图找回作为‘人’的重量。”
+            </div>
+        </div>
+
+        <div class="story-col">
+            <p><strong>v1.6 新篇章：酒馆的微光</strong><br>
+            目前以奴隶身份生活在埃戈纳尔的埃琳娜，终于获得了在酒馆工作的机会。在这家聚集了佣兵与暴徒的场所，她将换上工作服，端起酒杯，在刀光剑影的缝隙中，寻找一丝生存的喘息。</p>
+            
+            <div class="tech-specs">
+                <div class="spec-item"><div class="spec-dot"></div><span>2D等角视角 + 精美立绘差分</span></div>
+                <div class="spec-item"><div class="spec-dot"></div><span>全动态过场CG，无繁琐菜单</span></div>
+                <div class="spec-item"><div class="spec-dot"></div><span>本次新增 7 个专属场景</span></div>
+                <div class="spec-item"><div class="spec-dot"></div><span>PC / Android 双端原生支持</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ 三张预览图 -->
+    <div class="gallery-row">
+        <div class="g-frame">
+            <img src="images/1.jpg" alt="埃琳娜的故事 截图1">
+            <div class="g-msg">SCENE 01</div>
+        </div>
+        <div class="g-frame">
+            <img src="images/2.jpg" alt="埃琳娜的故事 截图2">
+            <div class="g-msg">SCENE 02</div>
+        </div>
+        <div class="g-frame">
+            <img src="images/3.jpg" alt="埃琳娜的故事 截图3">
+            <div class="g-msg">SCENE 03</div>
+        </div>
+    </div>
+
+    <!-- 更新时间轴 -->
+    <div class="timeline-section">
+        <div class="section-title">v1.6 开发管线日志</div>
+        <div class="log-grid">
+            <div class="log-card">
+                <div class="log-tag">NEW SCENE</div>
+                <div class="log-desc">实装「酒馆打工」任务线，含换装、送餐及随机事件触发机制。</div>
+            </div>
+            <div class="log-card">
+                <div class="log-tag">QUEST</div>
+                <div class="log-desc">前往奴隶宿舍与塞莉娜对话即可开启新章节，流程简洁流畅。</div>
+            </div>
+            <div class="log-card">
+                <div class="log-tag">DEV NOTE</div>
+                <div class="log-desc">货币系统尚未实装，当前“熟练度”与“金币”仅为占位符，请暂时忽略。</div>
+            </div>
+            <div class="log-card">
+                <div class="log-tag">ROADMAP</div>
+                <div class="log-desc">后续将以4个月为周期发布大型更新，期间不定期推送快照补丁。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下载区 -->
+    <div class="dl-zone">
+        <button id="dl-btn" class="btn-dl" onclick="initDownload()">▶ 获取 v1.6 资源包</button>
+        <div class="dl-meta">
+            <span>⚠ 链接已加密</span>
+            <span>更新于 2026.06.06</span>
+            <span>PC / Android</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    const _payload = "aHR0cHM6Ly93d3cuZ2FtZXR1YW4udG9wLzMyODUuaHRtbA==";
+
+    function initDownload() {
+        const btn = document.getElementById('dl-btn');
+        try {
+            btn.innerText = "正在解密通道...";
+            btn.style.opacity = "0.7";
+            
+            setTimeout(() => {
+                const target = atob(_payload);
+                window.location.href = target;
+            }, 800); // 延迟干扰爬虫
+        } catch (e) {
+            alert("通道解析失败，请刷新重试。");
+            btn.innerText = "▶ 获取 v1.6 资源包";
+            btn.style.opacity = "1";
+        }
+    }
+</script>
+
+</body>
+</html>
